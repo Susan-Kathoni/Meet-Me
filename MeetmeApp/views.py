@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, CreateView, DeleteView, ListView
 from .models import *
 from .filters import UserFilter
-from .forms import UserDeleteForm
+from .forms import *
 from .email import send_welcome_email
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -72,7 +72,7 @@ def register(req):
             return redirect("login")
     else:
         Form = UserRegisterForm()
-    return render(req, "django-registration/register.html", {'form': Form})
+    return render(req, "django-registration/registration_form.html", {'form': Form})
 
 
 @login_required

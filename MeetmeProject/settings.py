@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     # 'registration',
     'rest_framework.authtoken',
     'cloudinary',
+    'crispy_forms',
 ]
 
 cloudinary.config( 
