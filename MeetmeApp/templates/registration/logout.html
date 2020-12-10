@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+<section class="login">
+    <div class="content-section">
+        <p>You have Logged Out.</p>
+        <a href="{% url 'login' %}">Do you want to return to the site?</a>
+    </div>
+</section>
