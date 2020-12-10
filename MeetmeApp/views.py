@@ -38,7 +38,7 @@ class MerchList(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+  
     
 class MerchDescription(APIView):
     permission_classes = (IsAdminOrReadOnly,)
@@ -53,26 +53,26 @@ class MerchDescription(APIView):
         serializers = MerchSerializer(merch)
         return Response(serializers.data)
     
-def register(req):
-    if req.method == "POST":
-        Form = UserRegisterForm(req.POST)
-        if Form.is_valid():
-            Form.save()
-            username = Form.cleaned_data.get("username")
-            email = form.cleaned_data['email']
-            messages.success(req, f"You can now log in the account you have created with us.")
+# def register(req):
+#     if req.method == "POST":
+#         Form = UserRegisterForm(req.POST)
+#         if Form.is_valid():
+#             Form.save()
+#             username = Form.cleaned_data.get("username")
+#             email = Form.cleaned_data['email']
+#             messages.success(req, f"You can now log in the account you have created with us.")
             
             
-            recipient = subscriber(name = name,email =email)
-            recipient.save()
-            send_welcome_email(name,email)
-            data = {'success': 'You have been successfully added to mailing list'}
-            return JsonResponse(data)
+#             recipient = username(name = username,email =email)
+#             recipient.save()
+#             send_welcome_email(name,email)
+#             data = {'success': 'You have been successfully added to mailing list'}
+#             return JsonResponse(data)
 
-            return redirect("login")
-    else:
-        Form = UserRegisterForm()
-    return render(req, "django-registration/registration_form.html", {'form': Form})
+#             return redirect("login")
+#     else:
+#         Form = UserRegisterForm()
+#     return render(req, "django-registration/registration_form.html", {'form': Form})
 
 
 @login_required

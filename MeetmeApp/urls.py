@@ -10,7 +10,7 @@ urlpatterns=[
     path("home/", views.datePage, name="date-page"),
         
     #User URL Routes
-    path("register/", views.register, name="register"),
+    # path("register/", views.register, name="register"),
     path("profile/", views.profile, name="profile-page"),
     path("user/<int:pk>/", views.UserDetail.as_view(), name="user-detail"),
     path("block/<int:pk>/", views.blockUser, name="block"),

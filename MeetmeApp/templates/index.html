@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-<!--  -->
 {% block content %}
 <section class="landing">
   <div class="navigation">
@@ -7,6 +6,6 @@
     <a href="{% url 'login' %}" class="login">Log in</a>
   </div>
   <h1 class="title">Match. Chat. Love. </h1>
-  <a href="{% url 'register' %}" class="create-btn">Create Account with Us.</a>
+  <a href="account/register" class="create-btn">Create Account with Us.</a>
 </section>
 {% endblock content %}
