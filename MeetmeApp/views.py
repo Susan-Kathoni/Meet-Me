@@ -1,6 +1,6 @@
 import datetime as dt
 from django.shortcuts import render, redirect
-from django.http  import HttpResponse,Http404
+from django.http  import HttpResponse,Http404, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +8,14 @@ from django.views.generic import DetailView, CreateView, DeleteView, ListView
 from .models import *
 from .filters import UserFilter
 from .forms import UserDeleteForm
+from .email import send_welcome_email
+from django.http import JsonResponse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializer import *
+from rest_framework import status
+from .permissions import IsAdminOrReadOnly
+
 
 # Create your views here.
 def home(req):
@@ -15,14 +23,52 @@ def home(req):
 
 class UserDetail(LoginRequiredMixin, DetailView):
     model = Profile
+    
+class MerchList(APIView):
+    def get(self, request, format=None):
+        all_merch = MoringaMerch.objects.all()
+        serializers = MerchSerializer(all_merch, many=True)
+        return Response(serializers.data)
 
+        permission_classes = (IsAdminOrReadOnly,)
+    
+    def post(self, request, format=None):
+        serializers = MerchSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+class MerchDescription(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get_merch(self, pk):
+        try:
+            return MoringaMerch.objects.get(pk=pk)
+        except MoringaMerch.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        serializers = MerchSerializer(merch)
+        return Response(serializers.data)
+    
 def register(req):
     if req.method == "POST":
         Form = UserRegisterForm(req.POST)
         if Form.is_valid():
             Form.save()
             username = Form.cleaned_data.get("username")
+            email = form.cleaned_data['email']
             messages.success(req, f"You can now log in the account you have created with us.")
+            
+            
+            recipient = subscriber(name = name,email =email)
+            recipient.save()
+            send_welcome_email(name,email)
+            data = {'success': 'You have been successfully added to mailing list'}
+            return JsonResponse(data)
+
             return redirect("login")
     else:
         Form = UserRegisterForm()

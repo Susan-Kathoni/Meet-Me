@@ -19,33 +19,30 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.contrib.auth import views
 from rest_framework.authtoken.views import obtain_auth_token
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("MeetmeApp.urls")),
+    path('tinymce/', include('tinymce.urls')),
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     
     # Password URL Routes
     path("password-reset/", auth_views.PasswordResetView.as_view(template_name="password/change_password.html"), name="password_reset"),
-
-    path("password-reset/done", auth_views.PasswordResetDoneView.as_view(
-        template_name="password/passwordEmail.html"), name="password_reset_done"),
-
-    path("password-reset-confirm/<uidb64>/<token>", auth_views.PasswordResetConfirmView.as_view(
-        template_name="password/confirmPasswordReset.html"), name="password_reset_confirm"),
-
-    path("password-reset-complete", auth_views.PasswordResetCompleteView.as_view(
-        template_name="password/passwordResetSuccessful.html"), name="password_reset_complete"),
+    path("password-reset/done", auth_views.PasswordResetDoneView.as_view(template_name="password/passwordEmail.html"), name="password_reset_done"),
+    path("password-reset-confirm/<uidb64>/<token>", auth_views.PasswordResetConfirmView.as_view(template_name="password/confirmPasswordReset.html"), name="password_reset_confirm"),
+    path("password-reset-complete", auth_views.PasswordResetCompleteView.as_view(template_name="password/passwordResetSuccessful.html"), name="password_reset_complete"),
     
     # Login URL Routes
-    path("register/", user_views.register, name="register"),
+    
     path("login/", auth_views.LoginView.as_view(template_name="registration/login.html"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(template_name="registration/logout.html"), name="logout"),
     
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+
 
 
 
