@@ -35,6 +35,10 @@ GENDER_TYPE = (
     ('Other', 'Other')
 )
 
+class profile_image:
+    profile_pic = CloudinaryField('image', default="default.jpg", blank=True, null=True)
+    user = models.ForeignKey(User, related_name="user", on_delete=models.CASCADE)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, null=True)
@@ -44,13 +48,8 @@ class Profile(models.Model):
     more_about_myself = models.TextField(null=True)
     career = models.CharField(max_length=500, null=True)
     created_on = models.DateTimeField('Created on', auto_now_add=True)
-	# updated_on = models.DateTimeField('Updated on', auto_now_add=True)
     likeability = models.ManyToManyField(User, related_name="likes", blank=True)
     blocked_by = models.ManyToManyField(User, related_name="blocked", blank=True)
-    
-class meta:
-    profile_pic = CloudinaryField('image', default="default.jpg", blank=True, null=True)
-
 
     def __str__(self):
         return f"{self.full_name} Profile"
@@ -76,3 +75,8 @@ class Dating(models.Model):
     
 class Meta:
 		verbose_name = _("Dating")
+  
+class Choice(models.Model):
+	choice = models.CharField(max_length=45)
+	user = models.ForeignKey(User, related_name="user_choice", on_delete=models.CASCADE)
+  

@@ -18,35 +18,66 @@
   </div>
   <section class="profile">
     <div>
-      <img src="{{object.profile_image.url}}" alt="" class="profile-image" />
+      <img src="{{profile.profile_pic.url}}" alt="" class="profile-image" />
     </div>
     <div class="profile-about">
-      <h2>{{ object.full_name }}</h2>
-      <p class="bio">{{ object.more_about_myself }}</p>
+      <h2>{{ profile.full_name }}</h2>
+      <p class="bio">{{ profile.more_about_myself }}</p>
       <p class="username">{{ object.user.username }}</p>
     </div>
     <div class="stats">
       <div>
         <h4 class="header">Age</h4>
-        <h4>{{ object.age }}</h4>
+        <h4>{{ profile.age }}</h4>
       </div>
       <div>
         <h4 class="header">Career</h4>
-        <h4>{{object.career}}</h4>
+        <h4>{{profile.career}}</h4>
       </div>
       <div>
         <h4 class="header">Likeability</h4>
         <h4>{{object.likeability.count}}</h4>
       </div>
     </div>
-    <a
-      href="{% url 'write-message' object.user.username %}"
-      class="btn"
-      style="margin: 20px; background: rgb(47, 128, 0)"
-      >Send a Message</a
-    >
+
+
+    <div id="match-btn">
+      {% if unreadmsgs > 0 %}
+      <span class="new badge" id="msg-badge"> {{unreadmsgs}} </span>
+      {% endif %}
+      <a
+        href="{% url 'date-page' %}"
+        style="margin: 20px; background: coral"
+        class="btn"
+        >Find your match</a
+      >
+    </div>
   </section>
+  <div style="margin: 50px auto; max-width: 80%">
+    <ul class="collapsible">
+      <li>
+        <div class="collapsible-header">
+          <i class="fas fa-cog"></i> Edit Profile
+        </div>
+        <div class="collapsible-body">
+          <p>*Please enter your Tech Stack in CSV Format</p>
+          <form action="" method="POST" enctype="multipart/form-data">
+            <!-- Cross site request token added security -->
+            {% csrf_token %}
+            <!-- -->
+            {{ form }}
+            <div>
+              <button class="btn" type="submit" style="margin: 20px 0">
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>
+  
 
 <footer class="page-footer">
   <div class="container">

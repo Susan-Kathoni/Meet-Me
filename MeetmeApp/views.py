@@ -2,6 +2,7 @@ import datetime as dt
 from django.shortcuts import render, redirect
 from django.http  import HttpResponse,Http404, HttpResponseRedirect
 from django.contrib import messages
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, CreateView, DeleteView, ListView
@@ -13,8 +14,10 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import *
+from django.dispatch import receiver
 from rest_framework import status
 from .permissions import IsAdminOrReadOnly
+from django.db.models.signals import post_save
 
 
 # Create your views here.
@@ -52,7 +55,9 @@ class MerchDescription(APIView):
         merch = self.get_merch(pk)
         serializers = MerchSerializer(merch)
         return Response(serializers.data)
-    
+   
+
+ 
 # def register(req):
 #     if req.method == "POST":
 #         Form = UserRegisterForm(req.POST)
@@ -100,6 +105,21 @@ def profile(req):
     }
 
     return render(req, "user_registration/user_profile.html", context)
+
+@login_required(login_url='/accounts/login/') 
+def profile_update(request):
+         current_user = request.user
+         if request.method == 'POST':
+                form = UpdateForm(request.POST, request.FILES)
+                if form.is_valid():
+                        add=form.save(commit=False)
+                        add.user = current_user
+                        add.save()
+                return redirect('profile')
+         else:
+                form = ProfileUpdateForm()
+         return render(request,'User_registration/profile_update.html',{"form":form})
+
 
 def unauthenticated_user(view_func):
     def unauthenticated(req, *args, **kwargs):
@@ -206,3 +226,18 @@ def deleteuser(request):
     }
 
     return render(request, 'delete account/delete_account.html', context)
+
+class ProfileList(APIView):
+    def get(self, request, format=None):
+        allprofiles = Profile.objects.all()
+        serializers = ProfileSerializer(allprofiles, many=True)
+        return Response(serializers.data)
+        permission_classes = (IsAdminOrReadOnly,)
+
+# class LoginView(auth_views.LoginView):
+#     """Login view"""
+#     template_name = 'registration/login.html'
+#     redirect_authenticated_user = True
+
+# class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+#     """Logout View."""
