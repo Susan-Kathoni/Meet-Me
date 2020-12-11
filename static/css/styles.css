@@ -63,14 +63,6 @@
     border-radius: 15px;
   }
 
-
-
-
-
-
-  .image-home {
-    height: 250px;
-  }
   .link:hover {
     text-decoration: none !important;
     color: white !important;
@@ -94,21 +86,21 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background-image: url("/static/photos/backgrnd2.jpeg");
     z-index: 0;
   }
   .title {
     font-size: clamp(3.2rem, 8vw, 8rem);
     font-weight: 600;
     opacity: 1;
-    color: white;
+    color: black;
     z-index: 10;
     text-align: center;
     place-self: end center;
     margin-top: 50px;
   }
   .create-btn {
-    background: linear-gradient(262deg, #ff7854, #fd267d);
+    background: lightgreen;
     padding: 1rem 3rem;
     transition: background ease;
     border-radius: 100vh;
@@ -184,12 +176,12 @@
   }
   .bio {
     font-size: 1.4rem;
-    color: gray;
+    color: black;
     max-width: 50ch;
   }
   .username {
     font-size: 1.5rem;
-    color: grey;
+    color: black;
     text-align: center;
     font-style: italic;
     opacity: 0.9;
@@ -218,12 +210,11 @@
     font-size: 1.3rem;
   }
   .header {
-    color: grey;
+    color:black;
   }
   .user-card {
     margin: 15px;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
-    color: #2b2b2b;
+    color: #da2d2d;
   }
   .users-container {
     display: flex;
@@ -238,7 +229,7 @@
   .block-btn {
     background: transparent;
     border: 0;
-    transition: transform 250ms ease;
+    transition: transform 200ms ease;
   }
   .like-btn:focus,
   .block-btn:focus {
@@ -247,11 +238,11 @@
   }
   .like-btn i {
     font-size: 1.5rem;
-    color: rgb(209, 107, 124);
+    color:red;
   }
   .block-btn i {
-    font-size: 1.5rem;
-    color: rgba(187, 15, 44, 0.9);
+    font-size: 2rem;
+    color:lightsalmon;
   }
   
   .like-btn:hover,
@@ -260,12 +251,12 @@
   }
   #message {
     margin: 20px auto;
-    max-width: 50%;
+    max-width: 80%;
   }
   #filter {
     margin: auto;
     max-width: 50vw;
-    color: #2b2b2b;
+    color: darksalmon;
   }
   @media screen and (max-width: 900px) {
     #filter {
@@ -283,17 +274,6 @@
   }
   .container-fluid .btn {
     margin: auto;
-  }
-  .container-fluid h1 {
-    color: white;
-    margin-bottom: 50px;
-  }
-  .container-fluid form {
-    background: rgba(0, 0, 0, 0.18);
-    padding: 10px;
-  }
-  .container-fluid form label {
-    color: white;
   }
   
   .messages {
@@ -319,13 +299,7 @@
     height: 100px;
     border-radius: 50%;
   }
-  
-  .message__date {
-    color: lightslategray;
-  }
-  .message__content {
-    margin: 15px;
-  }
+
   .message__msg {
     margin: 0 auto;
   }
@@ -340,17 +314,6 @@
     margin: 5px;
   }
   
-  .burger a {
-    position: relative;
-  }
-  .burger span {
-    position: absolute;
-    right: -20px;
-    top: -15px;
-    background: #26a69a;
-    color: white;
-    font-weight: thin;
-  }
   .read {
     position: absolute;
     top: 1px;
@@ -376,16 +339,11 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: rgb(241, 133, 133);
+    background:lightgreen;
   }
-  .container-delete h1 {
-    margin-bottom: 20px;
-  }
+  
   .container-delete form {
     display: inline-flex;
-  }
-  .container-delete form * {
-    margin: 10px;
   }
   
   
